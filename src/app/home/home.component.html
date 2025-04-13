@@ -1,0 +1,68 @@
+<main>
+  <div class="wellcome">
+    <h1>TOUR DU LỊCH</h1>
+    <p>TRALVELAKÀ đưa bạn đi muôn nơi...</p>
+  </div>
+  <div class="VietNam-tour">
+    <h1>Khám phá kho tàng du lịch Việt Nam</h1>
+    <p class="description">Hơn <span>430</span> địa điểm du lịch trên khắp cả
+      nước cho bạn thỏa sức lựa chọn</p>
+    <div class="product-slider">
+      <button class="slide prev" (click)="scroll('left', 0)">❮</button>
+      <div #productContainer class="row">
+        <div class="col-lg-2 col-md-6">
+          <div class="product-card" (click)="navigateToDetail()">
+            <img src="/assets/images/anhProduct.jpg" alt="Product 1">
+            <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
+            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
+            <p class="product-time">4 ngày 3 đêm</p>
+            <hr>
+            <p class="price">Giá: <del>$250</del> $100</p>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-regular fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="slide next" (click)="scroll('right', 0)">❯</button>
+    </div>
+  </div>
+
+  <div class="recommend-tour">
+    <h1>Recommend Tour</h1>
+    <p class="description">Những tour du lịch được đánh giá cao nhất với TRALVELAKÀ</p>
+    <div class="product-slider">
+      <button class="slide prev" (click)="scroll('left', 1)">❮</button>
+      <div #productContainerNew class="row">
+        <div class="col-lg-2 col-md-6">
+          <div class="product-card" (click)="navigateToDetail()">
+            <img src="/assets/images/anhProduct.jpg" alt="Product 1">
+            <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
+            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
+            <p class="product-time">4 ngày 3 đêm</p>
+            <hr>
+            <p class="price">Giá: <del>$250</del> $100</p>
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-regular fa-star"></i>
+            </div>
+            <div class="product-action">
+              <button class="btn contact">Liên hệ</button>
+              <button class="btn book">Đặt ngay</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="slide next" (click)="scroll('right', 1)">❯</button>
+    </div>
+  </div>
+  <div style="height: 300px;">
+  </div>
+</main>

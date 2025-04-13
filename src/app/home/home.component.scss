@@ -1,0 +1,190 @@
+app-header {
+  position: sticky;
+  top: 0;
+  /* Đặt header ở trên cùng */
+  left: 0;
+  width: 100% !important;
+  z-index: 1000;
+
+}
+
+main {
+  background-image: url('/assets/images/backgroundHome.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100%;
+}
+
+.wellcome {
+  font-family: cursive;
+  text-align: center;
+  height: 50vh;
+
+  h1 {
+    font-size: xx-large;
+    padding: 150px 300px 0 0;
+    margin: 0;
+  }
+}
+
+.VietNam-tour, .recommend-tour {
+  margin: 0;
+  background-color: white;
+  padding-bottom: 50px;
+
+  h1 {
+    margin: 0;
+    color: #28e5e5;
+    padding-top: 30px;
+    text-align: center;
+  }
+
+  span {
+    color: rgb(255, 0, 212);
+    font-weight: bold;
+  }
+
+  .description {
+    text-align: center;
+  }
+
+  .product-slider {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    gap: 10px;
+
+    .slide {
+    font-size: 24px;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    color: pink;
+    &:active {
+      color: rgb(251, 61, 93);
+    }
+    }
+
+    .row {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      width: 100%;
+      padding: 10px;
+      flex-wrap: nowrap; /* Ngăn thẻ bị xuống dòng */
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .product-card {
+      cursor: pointer;
+      padding: 5px;
+      flex: 0 0 auto; // Không co giãn, giữ nguyên kích thước
+      border-radius: 3px;
+      box-shadow: 0 2px 5px 0;
+      align-items: center;
+      justify-content: center;
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+      // overflow: hidden;
+      &:hover {
+        transform: scale(1.03);
+      }
+
+      img {
+        border-radius: 10px;
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .fa-location-dot {
+        font-size: xx-small;
+      }
+
+      .name-product {
+        font-size: medium;
+      }
+
+      .product-time {
+        margin: 0;
+      }
+
+      hr {
+        border: 1px dotted white solid;
+        margin: 0;
+      }
+
+      .price {
+        font-weight: bold;
+        margin: 0;
+        color: red;
+
+        del {
+          color: #3c3c3c;
+        }
+      }
+
+      .product-rating {
+        color: rgb(255, 157, 0);
+
+        .fa-star {
+          font-size: medium;
+        }
+      }
+
+      .product-action {
+        width: 100%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+
+        button {
+          width: 49%;
+          border: 0;
+          background-color: white;
+          display: flex;
+          justify-content: center;
+          &.contact {
+            border-radius: 0 0 0 10px;
+          }
+
+          &.book {
+            border-radius: 0 0 10px 0;
+          }
+
+          &:active {
+            background-color: #28e5e5;
+            color: white;
+          }
+
+        }
+      }
+    }
+  }
+
+}
+
+.recommend-tour {
+  margin: 300px 0 0 0;
+  background-color: white;
+  padding: 10px 10px 50px 10px;
+  h1 {
+    color: rgb(255, 0, 255);
+    text-align: left;
+  }
+  .description {
+    text-align: left;
+  }
+}
+
+// .bodbod {
+//   width: 100px;
+//   height: 400px;
+// }

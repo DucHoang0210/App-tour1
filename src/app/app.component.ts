@@ -1,12 +1,22 @@
 import { Component } from '@angular/core';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'App-Tour';
+  childcall = '';
+  message = '';
+  child1 = 'con 1';
+  child2 = 'con 2';
+  child3 = 'con 3';
+  onHandler(name:string) {
+    this.childcall=name;
+  }
 }

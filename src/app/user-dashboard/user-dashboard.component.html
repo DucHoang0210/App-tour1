@@ -1,0 +1,61 @@
+
+<main>
+  <div class="container d-flex my-5">
+    <div class="menu d-flex flex-column">
+      <div class="menu-list">
+        <div class="menu-item my-2">
+          <i class="fa-solid fa-user text-start ml-1"></i>
+          <span class="menu-text fw-bold">Hồ sơ</span>
+        </div>
+        <div class="menu-item my-2">
+          <i class="fa-solid fa-user text-start ml-1"></i>
+          <span class="menu-text fw-bold">Lịch sử đặt tour</span>
+        </div>
+        <div class="menu-item my-2">
+          <i class="fa-solid fa-user text-start ml-1"></i>
+          <span class="menu-text fw-bold">Chỉnh sửa thông tin</span>
+        </div>
+        <div class="menu-item my-2">
+          <i class="fa-solid fa-user text-start ml-1"></i>
+          <span class="menu-text fw-bold"></span>
+        </div>
+      </div>
+      <div class="absolute bottom-4 w-full">
+        <div class="menu-item my-1">
+          <i class="fas fa-sign-out-alt menu-icon"></i>
+          <span class="menu-text fw-bold">Đăng Xuất</span>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="content d-flex flex-column">
+      <div class="avatar d-flex justify-content-center">
+        <div class="avatar-img">
+          <img src="/assets/images/avatar-user.jpg" alt="ảnh người dùng" class="rounded-circle">
+        </div>
+        <div class="name">
+          <h5> {{ name}} </h5>
+          <button class="rank"> {{ rank}} </button>
+        </div>
+
+<!-- làm nút search    -->
+      </div>
+      <div class="info d-flex flex-column">
+        <div class="user-email d-flex justify-content-between">
+          <label for="user-email">Email</label>
+          <input type="text" class="user-email" value="{{ userEmail }}" readonly>
+        </div>
+        <div class="user-name d-flex justify-content-between">
+          <label for="user-name">Tên đăng nhập</label>
+          <input type="text" class="user-name" value="{{ userName }}" readonly>
+        </div>
+        <div class="user-phone d-flex justify-content-between">
+          <label for="user-phone">Số điện thoại</label>
+          <input type="text" class="user-phone" value="{{ userPhone }}" readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
