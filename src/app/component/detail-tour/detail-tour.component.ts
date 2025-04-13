@@ -11,6 +11,7 @@ import { MapComponent } from "../map/map.component";
   styleUrl: './detail-tour.component.scss',
 })
 export class DetailTourComponent {
+  [x: string]: any;
 
   // tăng số lượng ngày
   totalDays = 4;
@@ -39,45 +40,24 @@ export class DetailTourComponent {
   }
 
   // cuộn tới vị trí thì không cuộn nữa
-  // isScrolled = false; // Biến theo dõi trạng thái cuộn
-  // scrollThreshold = 500; // Vị trí cần thay đổi trạng thái
+  isScrolled = false; // Biến theo dõi trạng thái cuộn
+  scrollThreshold = 100; // Vị trí cần thay đổi trạng thái
 
-  // @HostListener("window:scroll", []) // Lắng nghe sự kiện cuộn
-  // onWindowScroll() {
-  //   const scrollPosition = window.scrollY || document.documentElement.scrollTop;
-  //   this.isScrolled = scrollPosition > this.scrollThreshold;
-  // }
-
-
-  @ViewChild('sidebarRef') sidebarRef!: ElementRef;
-  isScrolled = false;
-
-  @HostListener('window:scroll', [])
+  @HostListener("window:scroll", []) // Lắng nghe sự kiện cuộn
   onWindowScroll() {
-    const sidebar = this.sidebarRef?.nativeElement;
-    const content = document.querySelector('.content');
-
-    if (sidebar && content) {
-      const contentBottom = content.getBoundingClientRect().bottom;
-      const sidebarHeight = sidebar.offsetHeight;
-      const windowHeight = window.innerHeight;
-
-      if (contentBottom <= windowHeight + sidebarHeight) {
-        this.isScrolled = false; // Không cố định nữa khi chạm đáy
-      } else {
-        this.isScrolled = true; // Cố định bill khi chưa chạm đáy
-      }
-    }
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    this.isScrolled = scrollPosition > this.scrollThreshold;
   }
 
 
-
+  // @ViewChild('sidebarRef') sidebarRef!: ElementRef;
+  // isScrolled = false;
 
   //hiển thị thêm
   isShowReview = false;
   toggleDisplay() {
     this.isShowReview = !this.isShowReview;
-    console.log("isShowReview: " , this.isShowReview);
+    console.log("isShowReview: ", this.isShowReview);
   }
 
   // Bill tăng giảm số lượng người và tiền
@@ -113,7 +93,10 @@ export class DetailTourComponent {
   email: string = '';
   notes: string = '';
 
+
+
   openModal() {
+
     const modalElement = document.getElementById('confirmBookingModal');
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
@@ -122,13 +105,53 @@ export class DetailTourComponent {
   }
 
   confirmBooking() {
-    console.log('Xác nhận đặt tour với thông tin:', {
-      fullName: this.fullName,
-      phoneNumber: this.phoneNumber,
-      email: this.email,
-      notes: this.notes
-    });
-    alert('Đặt tour thành công!');
+    let valid = true;
+
+    const phoneRegex = /^0\d{9,10}$/; // Bắt đầu bằng 0, dài 10-11 số
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Định dạng email đơn giản
+
+    if (!this.fullName.trim()) {
+      alert('Vui lòng nhập họ tên');
+      valid = false;
+      return;
+    }
+
+    if (!this.phoneNumber.trim()) {
+      alert('Vui lòng nhập số điện thoại');
+      valid = false;
+      return;
+    }
+
+    if (!phoneRegex.test(this.phoneNumber)) {
+      alert('Số điện thoại không hợp lệ (phải từ 10 đến 11 số và bắt đầu bằng 0)');
+      valid = false;
+      return;
+    }
+
+    if (!this.email.trim()) {
+      alert('Vui lòng nhập email');
+      valid = false;
+      return;
+    }
+
+    if (!emailRegex.test(this.email)) {
+      alert('Email không hợp lệ (phải có định dạng ten@domain.com)');
+      valid = false;
+      return;
+    }
+    if (valid) {
+        console.log('Xác nhận đặt tour với thông tin:', {
+        fullName: this.fullName,
+        phoneNumber: this.phoneNumber,
+        email: this.email,
+        notes: this.notes,
+        adults: this.adults,
+        children: this.children,
+        startDate: this.startDate,
+        endDate: this.endDate
+      });
+      alert('Đặt tour thành công!');
+    }
   }
 }
 

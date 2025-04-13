@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { DetailTourComponent } from './detail-tour/detail-tour.component';
-import { MapComponent } from './map/map.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
+import { HomeComponent } from './component/home/home.component';
+import { DetailTourComponent } from './component/detail-tour/detail-tour.component';
+import { MapComponent } from './component/map/map.component';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
+import { UserDashboardComponent } from './component/user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Trang chủ

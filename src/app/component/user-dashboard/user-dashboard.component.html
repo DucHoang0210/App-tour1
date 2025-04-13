@@ -1,0 +1,167 @@
+<main>
+  <div class="container d-flex">
+    <div class="menu d-flex flex-column">
+      <div class="menu-list">
+        <div class="menu-item my-2" (click)="toggleProfile()">
+          <i class="fa-solid fa-user text-start ml-1"></i>
+          <span class="menu-text fw-bold">Hồ sơ</span>
+        </div>
+        <div class="menu-item my-2" (click)="toggleHistory()">
+          <i class="fa-solid fa-calendar-week"></i>
+          <span class="menu-text fw-bold">Lịch sử đặt tour</span>
+        </div>
+        <div class="menu-item my-2" (click)="toggleEdit()">
+          <i class="fa-solid fa-user-pen"></i>
+          <span class="menu-text fw-bold">Chỉnh sửa thông tin</span>
+        </div>
+      </div>
+      <div class="absolute bottom-4 w-full" (click)="logout()">
+        <div class="menu-item my-1">
+          <i class="fas fa-sign-out-alt menu-icon"></i>
+          <span class="menu-text fw-bold">Đăng Xuất</span>
+        </div>
+      </div>
+    </div>
+    <!-- -------------------- CONTENT ------------------------ -->
+    <div class="content d-flex flex-column">
+
+      <!-- -------------------- PROFILE ------------------------ -->
+      <div class="profile" [ngClass]="{'show': isProfile , 'hide': !isProfile}">
+        <div class="avatar d-flex justify-content-center">
+          <div class="avatar-img">
+            <img src="/assets/images/avatar-user.jpg" alt="ảnh người dùng" class="rounded-circle">
+          </div>
+          <div class="name">
+            <h5> {{ name}} </h5>
+            <button class="rank"> {{ rank}} </button>
+          </div>
+        </div>
+        <div class="info d-flex flex-column">
+          <div class="user-email d-flex justify-content-between">
+            <label for="user-email">Email</label>
+            <input type="text" class="user-email" value="{{ userEmail }}" readonly>
+          </div>
+          <div class="user-name d-flex justify-content-between">
+            <label for="user-name">Tên đăng nhập</label>
+            <input type="text" class="user-name" value="{{ userName }}" readonly>
+          </div>
+          <div class="user-phone d-flex justify-content-between">
+            <label for="user-phone">Số điện thoại</label>
+            <input type="text" class="user-phone" value="{{ userPhone }}" readonly>
+          </div>
+        </div>
+      </div>
+
+      <!-- ------------------------ HISTORY ------------------------ -->
+      <div class="history-container" [ngClass]="{'show': isHistory , 'hide': !isHistory}">
+        <h2>Lịch sử đặt tour</h2>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Ngày đặt</th>
+                <th>Tên tour</th>
+                <th>Số người</th>
+                <th>Giá tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of bookings; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ booking.date }}</td>
+                <td>{{ booking.tourName }}</td>
+                <td>{{ booking.people }}</td>
+                <td>{{ booking.price | currency:'VND' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ------------------------ EDIT PROFILE ------------------------ -->
+      <div class="profile edit" [ngClass]="{'show': isEdit , 'hide': !isEdit}">
+        <div class="avatar d-flex justify-content-center align-items-center">
+          <div class="avatar-img position-relative">
+            <img src="/assets/images/avatar-user.jpg" alt="ảnh người dùng" class="rounded-circle">
+            <i class="fa-solid fa-pen-to-square edit-icon position-absolute bottom-0 end-0" data-input="nameInput"></i>
+          </div>
+          <div class="name d-flex align-items-center gap-2">
+            <h5> {{ name}} </h5>
+            <i class="fa-solid fa-pen-to-square edit-icon" data-input="nameInput"></i>
+          </div>
+        </div>
+
+        <div class="info d-flex flex-column mt-3">
+          <div class="user-email d-flex justify-content-between align-items-center">
+            <label for="emailInput">Email</label>
+            <div class="d-flex align-items-center gap-2">
+              <input id="emailInput" [(ngModel)]="userEmail" #emailInput type="text" class="user-email" value="{{ userEmail }}" readonly>
+              <i class="fa-solid fa-pen-to-square edit-icon" data-input="emailInput"
+                (click)="focusInput(emailInput)"></i>
+            </div>
+          </div>
+
+          <div class="user-name d-flex justify-content-between align-items-center">
+            <label for="usernameInput">Tên đăng nhập</label>
+            <div class="d-flex align-items-center gap-2">
+              <input id="usernameInput" [(ngModel)]="userName" #usernameInput type="text" class="user-name" value="{{ userName }}" readonly>
+              <i class="fa-solid fa-pen-to-square edit-icon" data-input="usernameInput"
+                (click)="focusInput(usernameInput)"></i>
+            </div>
+          </div>
+
+          <div class="user-phone d-flex justify-content-between align-items-center">
+            <label for="phoneInput">Số điện thoại</label>
+            <div class="d-flex align-items-center gap-2">
+              <input id="phoneInput" [(ngModel)]="userPhone" #phoneInput type="text" class="user-phone" value="{{ userPhone }}" readonly>
+              <i class="fa-solid fa-pen-to-square edit-icon" data-input="phoneInput"
+                (click)="focusInput(phoneInput)"></i>
+            </div>
+          </div>
+        </div>
+        <div class="action-setting d-flex justify-content-between">
+          <button class="action-btn edit-password" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</button>
+          <button class="action-btn save" (click)="logUserEmail()">Lưu thay đổi</button>
+        </div>
+      </div>
+
+      <!-- ------------------------ FORM ĐỔI MẬT KHẨU ------------------------ -->
+
+      <div class="modal fade " id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="changePasswordModalLabel">Đổi Mật Khẩu</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form (ngSubmit)="onSubmit()">
+                <div class="mb-3">
+                  <label for="currentPassword" class="form-label">Mật khẩu hiện tại:</label>
+                  <input type="password" class="form-control" [(ngModel)]="currentPassword" name="currentPassword" id="currentPassword">
+                  <span *ngIf="currentPasswordError" class="error-message text-danger">{{ currentPasswordError }}</span>
+                </div>
+                <div class="mb-3">
+                  <label for="newPassword" class="form-label">Mật khẩu mới:</label>
+                  <input type="password" class="form-control" [(ngModel)]="newPassword" name="newPassword" id="newPassword">
+                  <span *ngIf="newPasswordError" class="error-message text-danger">{{ newPasswordError }}</span>
+                </div>
+                <div class="mb-3">
+                  <label for="confirmPassword" class="form-label">Nhập lại mật khẩu mới:</label>
+                  <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" id="confirmPassword">
+                  <span *ngIf="confirmPasswordError" class="error-message text-danger">{{ confirmPasswordError }}</span>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">Hủy</button>
+              <button type="button" class="btn btn-primary" (click)="onSubmit()">Xác nhận</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

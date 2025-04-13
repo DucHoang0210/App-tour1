@@ -8,8 +8,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  isRegisterMode = false;
-  toggle() {
-    this.isRegisterMode = !this.isRegisterMode;
-  }
+
 }
