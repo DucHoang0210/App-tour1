@@ -1,14 +1,31 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+import {CommonModule} from '@angular/common';
+import {Tour} from '../../models/tour';
+import {TourService} from '../../services/tour.service';
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
-
+export class HomeComponent implements OnInit{
+  tours: Tour[] = [];
+  ngOnInit(): void {
+    // Load dữ liệu từ service hoặc gán dữ liệu giả để hiển thị
+    this.loadTours();
+  }
+  loadTours() {
+    this.tourService.getAllTours().subscribe({
+      next: (data) => {
+        this.tours = data;
+        console.log('Dữ liệu tour nhận được:', data); // Kiểm tra dữ liệu
+      },
+      error: (err) => {
+        console.error("Lỗi khi gọi API:", err);
+      }
+    });
+  }
   // cuon trang cho bill khong cuon theo
   @ViewChild('productContainer', { static: false }) productContainer!: ElementRef;
 
@@ -35,9 +52,9 @@ export class HomeComponent {
   }
 
   // click vao san pham
-  constructor(private router: Router) {}
+  constructor(private router: Router,private tourService: TourService) {}
 
-  navigateToDetail() {
-    this.router.navigate(['/detail-tour']);
+  navigateToDetail(tourID: number) {
+    this.router.navigate(['/detail-tour',tourID]);
   }
 }

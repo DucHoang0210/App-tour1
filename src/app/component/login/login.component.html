@@ -1,27 +1,40 @@
 <main>
   <!-- login form -->
-<div class="wrapper login" >
-  <form action="#">
-    <h2>Login</h2>
-    <div class="input-field">
-      <input type="text" required>
-      <label>Enter your email</label>
-    </div>
-    <div class="input-field">
-      <input type="password" required>
-      <label>Enter your password</label>
-    </div>
-    <div class="forget">
-      <label for="remember">
-        <input type="checkbox" id="remember">
-        <p>Remember me</p>
-      </label>
-      <a href="#">Forgot password?</a>
-    </div>
-    <button type="submit  ">Log In</button>
-    <div class="choice-mode">
-      <p>Don't have an account? <a href="/register">Register</a></p>
-    </div>
-  </form>
-</div>
+  <div class="wrapper login">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h2>Login</h2>
+
+      <div class="input-field">
+        <input type="email" formControlName="email" required>
+        <label>Enter your email</label>
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+          <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</small>
+        </div>
+      </div>
+
+      <div class="input-field">
+        <input type="password" formControlName="password" required>
+        <label>Enter your password</label>
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+          <small>Password is required.</small>
+        </div>
+      </div>
+
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember" formControlName="remember">
+          <p>Remember me</p>
+        </label>
+        <a href="#">Forgot password?</a>
+      </div>
+
+      <button type="submit">Log In</button>
+
+      <div class="choice-mode">
+        <p>Don't have an account? <a href="/register">Register</a></p>
+      </div>
+    </form>
+  </div>
 </main>
+

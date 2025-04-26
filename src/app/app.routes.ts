@@ -8,7 +8,7 @@ import { UserDashboardComponent } from './component/user-dashboard/user-dashboar
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // Trang chủ
-  { path: 'detail-tour', component: DetailTourComponent }, // Chi tiết tour
+  { path: 'detail-tour/:tourID', component: DetailTourComponent }, // Chi tiết tour
   { path: 'map', component: MapComponent }, // Bản đồ
   { path: 'login', component: LoginComponent }, // Đăng nhập
   { path: 'register', component: RegisterComponent }, // Đăng ký

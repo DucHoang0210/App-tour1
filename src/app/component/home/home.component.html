@@ -10,14 +10,15 @@
     <div class="product-slider">
       <button class="slide prev" (click)="scroll('left', 0)">❮</button>
       <div #productContainer class="row">
-        <div class="col-lg-2 col-md-6">
-          <div class="product-card" (click)="navigateToDetail()">
-            <img src="/assets/images/anhProduct.jpg" alt="Product 1">
+
+        <div class="col-lg-2 col-md-6" *ngFor="let tour of tours" >
+          <div class="product-card" (click)="navigateToDetail(tour.tourID)">
+            <img [src]="tour.image || '/assets/images/default-tour.jpg'"  class="object-fit-cover" style="height: 200px;">
             <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
-            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
+            <h2 class="name-product">{{tour.title}}</h2>
             <p class="product-time">4 ngày 3 đêm</p>
             <hr>
-            <p class="price">Giá: <del>$250</del> $100</p>
+            <p class="price">Giá: <del>{{tour.priceAdult}}</del> $100</p>
             <div class="product-rating">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
@@ -39,7 +40,7 @@
       <button class="slide prev" (click)="scroll('left', 1)">❮</button>
       <div #productContainerNew class="row">
         <div class="col-lg-2 col-md-6">
-          <div class="product-card" (click)="navigateToDetail()">
+          <div class="product-card" >
             <img src="/assets/images/anhProduct.jpg" alt="Product 1">
             <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
             <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>

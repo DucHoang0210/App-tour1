@@ -43,7 +43,9 @@ main {
 }
 
 .img-description {
-  width: 80%;
+  width: 60%;
+  border-radius: 10px;
+  justify-content: center;
 }
 
 .subtitle {
@@ -222,4 +224,34 @@ main {
 
 .review-table-display {
     display: none;
+}
+.map-wrapper {
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.map-wrapper:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.map-iframe {
+  min-height: 400px;
+}
+
+
+.map-container {
+  position: relative;
+  width: 100%;  /* Chiếm hết chiều rộng của parent */
+  padding-bottom: 56.25%; /* Tạo tỷ lệ khung hình 16:9 (height / width = 9 / 16) */
+  height: 0;  /* Ẩn chiều cao gốc */
+  overflow: hidden;
+}
+
+.map-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;  /* Chiếm hết chiều rộng */
+  height: 600px; /* Chiếm hết chiều cao */
+  border: 0;
 }

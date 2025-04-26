@@ -1,31 +1,59 @@
 <main>
-  <!-- register form -->
-<div class="wrapper register">
-  <form>
-    <h2>Register</h2>
-    <div class="input-field">
-      <input type="text" required>
-      <label>Enter your email</label>
-    </div>
-    <div class="input-field">
-      <input type="password" required>
-      <label>Enter your password</label>
-    </div>
-    <div class="input-field">
-      <input type="password" required>
-      <label>Confirm your password</label>
-    </div>
-    <div class="forget">
-      <label for="remember">
-        <input type="checkbox" id="remember">
-        <p>Remember me</p>
-      </label>
-    </div>
-    <button type="submit">Register</button>
-    <div class="choice-mode">
-      <p>You have an account? <a href="/login">Login</a></p>
-    </div>
-  </form>
-</div>
+  <div class="wrapper register">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <h2>Register</h2>
 
+      <!-- Email Field -->
+      <div class="input-field">
+        <input type="email" formControlName="email" required [class.invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <label>Enter your email</label>
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-field">
+        <input type="password" formControlName="password" required [class.invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+        <label>Enter your password</label>
+        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Password must be at least 6 characters
+          </span>
+        </div>
+      </div>
+
+      <!-- Confirm Password Field -->
+      <div class="input-field">
+        <input type="password" formControlName="confirmPassword" required [class.invalid]="(registerForm.get('confirmPassword')?.invalid || registerForm.errors?.['passwordMismatch']) && registerForm.get('confirmPassword')?.touched">
+        <label>Confirm your password</label>
+        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="error-message">
+          <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Please confirm your password</span>
+        </div>
+        <div *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="error-message">
+          Passwords do not match
+        </div>
+      </div>
+
+      <!-- Remember Me Checkbox -->
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember">
+          <p>Remember me</p>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="isLoading || registerForm.invalid">
+        {{ isLoading ? 'Registering...' : 'Register' }}
+      </button>
+
+      <!-- Login Link -->
+      <div class="choice-mode">
+        <p>You have an account? <a href="/login">Login</a></p>
+      </div>
+    </form>
+  </div>
 </main>
