@@ -29,25 +29,25 @@
       <div class="profile" [ngClass]="{'show': isProfile , 'hide': !isProfile}">
         <div class="avatar d-flex justify-content-center">
           <div class="avatar-img">
-            <img src="/assets/images/avatar-user.jpg" alt="ảnh người dùng" class="rounded-circle">
+            <img src="{{ userInfo.avatar}}" alt="ảnh người dùng" class="rounded-circle">
           </div>
           <div class="name">
-            <h5> {{ name}} </h5>
-            <button class="rank"> {{ rank}} </button>
+            <h5> {{ userInfo.name}} </h5>
+            <button class="rank"> {{ userInfo.rank}} </button>
           </div>
         </div>
         <div class="info d-flex flex-column">
           <div class="user-email d-flex justify-content-between">
             <label for="user-email">Email</label>
-            <input type="text" class="user-email" value="{{ userEmail }}" readonly>
+            <input type="text" class="user-email" value="{{ userInfo.userEmail }}" readonly>
           </div>
           <div class="user-name d-flex justify-content-between">
             <label for="user-name">Tên đăng nhập</label>
-            <input type="text" class="user-name" value="{{ userName }}" readonly>
+            <input type="text" class="user-name" value="{{ userInfo.userName }}" readonly>
           </div>
           <div class="user-phone d-flex justify-content-between">
             <label for="user-phone">Số điện thoại</label>
-            <input type="text" class="user-phone" value="{{ userPhone }}" readonly>
+            <input type="text" class="user-phone" value="{{ userInfo.userPhone }}" readonly>
           </div>
         </div>
       </div>
@@ -88,7 +88,7 @@
             <i class="fa-solid fa-pen-to-square edit-icon position-absolute bottom-0 end-0" data-input="nameInput"></i>
           </div>
           <div class="name d-flex align-items-center gap-2">
-            <h5> {{ name}} </h5>
+            <h5> {{ userInfo.name}} </h5>
             <i class="fa-solid fa-pen-to-square edit-icon" data-input="nameInput"></i>
           </div>
         </div>
@@ -97,7 +97,7 @@
           <div class="user-email d-flex justify-content-between align-items-center">
             <label for="emailInput">Email</label>
             <div class="d-flex align-items-center gap-2">
-              <input id="emailInput" [(ngModel)]="userEmail" #emailInput type="text" class="user-email" value="{{ userEmail }}" readonly>
+              <input id="emailInput" [(ngModel)]="userInfo.userEmail" #emailInput type="text" class="user-email" value="{{ userInfo.userEmail }}" readonly>
               <i class="fa-solid fa-pen-to-square edit-icon" data-input="emailInput"
                 (click)="focusInput(emailInput)"></i>
             </div>
@@ -106,7 +106,7 @@
           <div class="user-name d-flex justify-content-between align-items-center">
             <label for="usernameInput">Tên đăng nhập</label>
             <div class="d-flex align-items-center gap-2">
-              <input id="usernameInput" [(ngModel)]="userName" #usernameInput type="text" class="user-name" value="{{ userName }}" readonly>
+              <input id="usernameInput" [(ngModel)]="userInfo.userName" #usernameInput type="text" class="user-name" value="{{ userInfo.userName }}" readonly>
               <i class="fa-solid fa-pen-to-square edit-icon" data-input="usernameInput"
                 (click)="focusInput(usernameInput)"></i>
             </div>
@@ -115,53 +115,18 @@
           <div class="user-phone d-flex justify-content-between align-items-center">
             <label for="phoneInput">Số điện thoại</label>
             <div class="d-flex align-items-center gap-2">
-              <input id="phoneInput" [(ngModel)]="userPhone" #phoneInput type="text" class="user-phone" value="{{ userPhone }}" readonly>
+              <input id="phoneInput" [(ngModel)]="userInfo.userPhone" #phoneInput type="text" class="user-phone" value="{{ userInfo.userPhone }}" readonly>
               <i class="fa-solid fa-pen-to-square edit-icon" data-input="phoneInput"
                 (click)="focusInput(phoneInput)"></i>
             </div>
           </div>
         </div>
         <div class="action-setting d-flex justify-content-between">
-          <button class="action-btn edit-password" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Đổi mật khẩu</button>
+          <button class="action-btn edit-password" (click)="changePassword()">Đổi mật khẩu</button>
           <button class="action-btn save" (click)="logUserEmail()">Lưu thay đổi</button>
         </div>
       </div>
 
-      <!-- ------------------------ FORM ĐỔI MẬT KHẨU ------------------------ -->
-
-      <div class="modal fade " id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="changePasswordModalLabel">Đổi Mật Khẩu</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form (ngSubmit)="onSubmit()">
-                <div class="mb-3">
-                  <label for="currentPassword" class="form-label">Mật khẩu hiện tại:</label>
-                  <input type="password" class="form-control" [(ngModel)]="currentPassword" name="currentPassword" id="currentPassword">
-                  <span *ngIf="currentPasswordError" class="error-message text-danger">{{ currentPasswordError }}</span>
-                </div>
-                <div class="mb-3">
-                  <label for="newPassword" class="form-label">Mật khẩu mới:</label>
-                  <input type="password" class="form-control" [(ngModel)]="newPassword" name="newPassword" id="newPassword">
-                  <span *ngIf="newPasswordError" class="error-message text-danger">{{ newPasswordError }}</span>
-                </div>
-                <div class="mb-3">
-                  <label for="confirmPassword" class="form-label">Nhập lại mật khẩu mới:</label>
-                  <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" id="confirmPassword">
-                  <span *ngIf="confirmPasswordError" class="error-message text-danger">{{ confirmPasswordError }}</span>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onCancel()">Hủy</button>
-              <button type="button" class="btn btn-primary" (click)="onSubmit()">Xác nhận</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </main>

@@ -1,141 +1,148 @@
 <main>
-  <div class="container">
-    <div class="content" >
-      <h1>Welcome to Phu Quoc Tour</h1>
+  <div class="container" #containerRef>
+    <div class="content">
+      <h1>Welcome to {{ detailTour.name }}</h1>
       <p class="subtitle">TRAVELAKA đưa bạn đi muôn nơi...</p>
       <div class="image d-flex justify-content-center">
         <img class="img-description" src="/assets/images/phuQuocDes.jpg" alt="Phu Quoc Beach">
       </div>
       <div class="description">
-        <p id="">
-          Phú Quốc, hòn đảo lớn nhất Việt Nam, được mệnh danh là "đảo ngọc" với vẻ đẹp hoang sơ, biển xanh cát trắng và
-          hệ sinh thái phong phú. Nằm trong vịnh Thái Lan, Phú Quốc không chỉ thu hút du khách bởi những bãi biển tuyệt
-          đẹp như Bãi Sao, Bãi Dài mà còn bởi nền ẩm thực độc đáo, các khu chợ đêm sôi động và những điểm du lịch hấp
-          dẫn như VinWonders, Safari, cáp treo Hòn Thơm. Đây là điểm đến lý tưởng cho những ai muốn tận hưởng kỳ nghỉ
-          thư giãn và khám phá thiên nhiên.
-        </p>
+        <p>{{ detailTour.description }}</p>
       </div>
       <div class="explore-tour">
         <hr>
         <h3>Điểm nhấn:</h3>
         <ul class="hightlight-list">
-          <li><strong>Tham quan:</strong> Công Viên Nước Aquatopia - Trải Nghiệm Đi Cáp Treo Vượt Biển - Khám Phá Núi
-            San Hô & Rặng san
-            hô Bán Nguyệt</li>
-          <li><strong>Lưu trú:</strong> Khách sạn chuẩn 4 sao AVS Hotel Phu Quoc</li>
-          <li><strong>Ăn uống:</strong> Gỏi cá Trích - Nhum biển nướng</li>
-          <li><strong>Hoạt động khác:</strong> Lặn tham quan - Vui chơi tại công viên nước với hơn 100 hoạt động vui
-            chơi</li>
+          <li><strong>Tham quan:</strong> {{ detailTour.hightlight[0]}}</li>
+          <li><strong>Lưu trú:</strong> {{ detailTour.hightlight[1]}}</li>
+          <li><strong>Ăn uống:</strong> {{ detailTour.hightlight[2]}}</li>
+          <li><strong>Hoạt động khác:</strong> {{ detailTour.hightlight[3]}}</li>
         </ul>
         <hr>
+
         <h3>Lịch trình:</h3>
-
-
-        <div class="container-initerary" *ngFor="let day of totalDaysArray(); let i = index">
+        <div class="container-initerary" *ngFor="let day of itineraryDays; let i = index">
           <div class="initerary d-flex">
-            <h6>Ngày {{ i + 1 }}: Tiêu đề ngày {{i+1}}</h6>
-            <i class="fa-solid fa-chevron-down " (click)="toggle(i)"></i>
+            <h6>Ngày {{ i + 1 }}: {{ day.title }}</h6>
+            <i class="fa-solid fa-chevron-down" (click)="toggle(i)"></i>
           </div>
           <div class="itinerary-details" [ngClass]="{ 'show-itinerary-details': isShowItinerary[i] }">
             <ul>
-              <li>Tới sân bay Phú Quốc, xe đón du khách đưa đoàn về khách sạn gửi hành lý, tự do nghỉ ngơi.</li>
-              <li>Ăn trưa đặc sản Phú Quốc với “Gỏi cá Trích” tại nhà hàng và về nhận phòng khách sạn.</li>
-              <li>Quý khách khởi hành đi tham quan phía Đông đảo: Vườn tiêu Suối đá - Cơ sở ủ rượu vang Sim - Làng
-                chài
-                cổ Hàm Ninh - Dinh Bà, Dinh Cậu.</li>
-              <li>Quý khách dùng cơm tối và về khách sạn nghỉ ngơi. Tự do dạo bãi biển, thưởng thức không khí yên tĩnh
-                tuyệt vời của thành phố biển đảo, có thể tự do đi thăm quan đảo.</li>
+              <li *ngFor="let detail of day.details">{{ detail }}</li>
             </ul>
           </div>
         </div>
+
+
       </div>
       <hr>
       <app-map></app-map>
       <hr>
+
+
       <!-- đánh giá  -->
       <div class="container-rating mt-4">
         <h3 class="fw-bold">Đánh giá</h3>
         <div class="d-flex">
           <div class="average-rating d-flex-column">
-            <h1 class="display-4 fw-bold mt-4">4.9</h1>
-            <div class="rating">★★★★★</div>
-            <p class="total-review">263 lượt đánh giá</p>
+            <h1 class="display-4 fw-bold mt-4">{{ averageRating | number:'1.1-1' }}</h1>
+            <p class="total-review">{{ countReviewCard }} lượt đánh giá</p>
           </div>
           <!-- Thanh tiến trình sao -->
           <div class="mt-3">
             <div class="d-flex align-items-center">
               <div class="rating me-2">★★★★★</div>
               <div class="progress flex-fill">
-                <div class="progress-bar bg-warning" style="width: 80%;"></div>
+                <div class="progress-bar bg-warning" [style.width.%]="ratingPercentages[5]"></div>
               </div>
             </div>
             <div class="d-flex align-items-center">
               <div class="rating me-2">★★★★☆</div>
               <div class="progress flex-fill">
-                <div class="progress-bar bg-warning" style="width: 10%;"></div>
+                <div class="progress-bar bg-warning" [style.width.%]="ratingPercentages[4]"></div>
               </div>
             </div>
             <div class="d-flex align-items-center">
               <div class="rating me-2">★★★☆☆</div>
               <div class="progress flex-fill">
-                <div class="progress-bar bg-warning" style="width: 5%;"></div>
+                <div class="progress-bar bg-warning" [style.width.%]="ratingPercentages[3]"></div>
               </div>
             </div>
             <div class="d-flex align-items-center">
               <div class="rating me-2">★★☆☆☆</div>
               <div class="progress flex-fill">
-                <div class="progress-bar bg-warning" style="width: 3%;"></div>
+                <div class="progress-bar bg-warning" [style.width.%]="ratingPercentages[2]"></div>
               </div>
             </div>
             <div class="d-flex align-items-center">
               <div class="rating me-2">★☆☆☆☆</div>
               <div class="progress flex-fill">
-                <div class="progress-bar bg-warning" style="width: 2%;"></div>
+                <div class="progress-bar bg-warning" [style.width.%]="ratingPercentages[1]"></div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Đánh giá của người dùng -->
-        <div class="review-table mt-4" [ngClass]="{ 'hide': isShowReview}">
-          <div class="container-review">
-            <div class="review-card">
-              <div class="d-flex align-items-center">
-                <img src="/assets/images/avt-review.jpg" class="rounded-circle" alt="User">
-                <div class="review-name">
-                  <strong>NguyenVanAn</strong> <br>
-                  <span class="review-date">11/03/2024</span> <br>
-                  <span class="rating">★★★★★</span>
-                </div>
-              </div>
-              <p class="mt-2">Tôi rất hài lòng với dịch vụ của tour. Nhân viên tư vấn nhiệt tình, hướng dẫn viên chuyên
-                nghiệp, am hiểu địa phương. Lịch trình hợp lý, phương tiện di chuyển sạch sẽ, khách sạn và nhà hàng chất
-                lượng. Một trải nghiệm tuyệt vời, đáng để giới thiệu!</p>
+        <div class="review-table mt-4">
+
+          <div class="feedback-form mt-4 p-3 rounded">
+            <div class="mb-2 d-flex align-items-center gap-2">
+              <img [src]="user.avatar" class="feedback-avatar rounded-circle" alt="User">
+              <span class="form-label">{{ user.name }}</span>
+            </div>
+            <div class="mb-2">
+              <label for="rating" class="form-label">Đánh giá (sao)</label>
+              <select [(ngModel)]="newReview.rating" class="form-control" id="rating">
+                <option *ngFor="let star of [5, 4, 3, 2, 1]" [value]="star">{{ star }} ★</option>
+              </select>
+            </div>
+            <div class="mb-2">
+              <label for="content" class="form-label">Nội dung</label>
+              <textarea [(ngModel)]="newReview.content" class="form-control" id="content" rows="3"></textarea>
+            </div>
+            <button (click)="submitReview()" class="btn-submit">Gửi đánh giá</button>
+          </div>
+
+          <div class="filter-rating mb-3 d-flex align-items-center flex-wrap">
+            <label class="me-2">Lọc theo đánh giá:</label>
+            <div class="btn-group" role="group">
+              <button
+                type="button"
+                class="btn-choice"
+                [class.active]="selectedStar === 0"
+                (click)="selectedStar = 0">
+                Tất cả
+              </button>
+              <button
+                *ngFor="let star of [5, 4, 3, 2, 1]"
+                type="button"
+                class="btn-choice"
+                [class.active]="selectedStar === star"
+                (click)="selectedStar = star">
+                {{ star }} ★
+              </button>
             </div>
           </div>
-          <div class="see-more d-flex justify-content-center align-items-center">
-            <a class="text-center" (click)="toggleDisplay()">Xem thêm</a>
-          </div>
-        </div>
-        <!-- hiển thị thêm đánh giá của người dùng  -->
-        <div class="review-table-display mt-4" [ngClass]="{ 'show': isShowReview }">
+
+
           <div class="container-review">
-            <div class="review-card">
+            <div *ngFor="let review of (showAllReviews ? filteredReviews : filteredReviews.slice(0, 2))" class="review-card">
               <div class="d-flex align-items-center">
-                <img src="/assets/images/customerReview.jpg" class="rounded-circle" alt="User">
+                <img src="{{ review.avatar }}" class="rounded-circle" alt="User">
                 <div class="review-name">
-                  <strong>NguyenVanAn</strong> <br>
-                  <span class="review-date">11/03/2024</span> <br>
-                  <span class="rating">★★★★★</span>
+                  <strong>{{ review.name }}</strong> <br>
+                  <span class="review-date">{{ review.date | date:'dd/MM/yyyy' }}</span> <br>
+                  <span class="rating">{{ review.rating }} ★</span>
                 </div>
               </div>
-              <p class="mt-2">Tôi rất hài lòng với dịch vụ của tour. Nhân viên tư vấn nhiệt tình, hướng dẫn viên chuyên
-                nghiệp, am hiểu địa phương. Lịch trình hợp lý, phương tiện di chuyển sạch sẽ, khách sạn và nhà hàng chất
-                lượng. Một trải nghiệm tuyệt vời, đáng để giới thiệu!</p>
+              <p class="mt-2">{{ review.content }}</p>
             </div>
-          </div>
-          <div class="see-more d-flex justify-content-center align-items-center">
-            <a class="text-center" (click)="toggleDisplay()">Ẩn bớt</a>
+            <!-- Nút để hiển thị thêm hoặc ẩn bớt reviews -->
+
+            <i (click)="toggleReviews()" class="show-reviews d-flex justify-content-center">
+              {{ showAllReviews ? 'Ẩn bớt' : 'Hiển thị tất cả' }}
+            </i>
           </div>
         </div>
       </div>
@@ -144,27 +151,24 @@
       <div class="relate-combo d-flex-column">
         <h3 class="mx-auto text-center">COMBO liên quan</h3>
         <div class="product-table row">
-          <div class="col-lg-3 col-md-6">
-            <div class="product-card">
+          <div *ngFor="let tour of tours" class="col-lg-2 col-md-6">
+            <div class="product-card" (click)="navigateToDetail()">
               <img src="/assets/images/anhProduct.jpg" alt="Product 1">
-              <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
-              <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
-              <p class="product-time">4 ngày 3 đêm</p>
+              <i class="fa-solid fa-location-dot"><a> {{ tour.location }}</a></i>
+              <h2 class="name-product">{{ tour.title }}</h2>
+              <p class="product-time">{{ tour.duration }}</p>
               <hr>
-              <p class="price">Giá: <del>$250</del> $100</p>
+              <p class="price">Giá: <del>{{ tour.oldPrice }}</del> {{ tour.salePrice }} VNĐ</p>
               <div class="product-rating">
+                <strong>{{ tour.rating }} </strong>
                 <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-<!-- code bill  -->
+    <!-- code bill  -->
     <div class="bill-body" [ngClass]="{'scroll': isScrolled}" #sidebarRef>
       <div class="card p-3 shadow-sm">
         <h3 class="bill-header mb-0">Tour booking</h3>
@@ -224,21 +228,62 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3">
-            <label class="form-label">Họ tên</label>
-            <input type="text" class="form-control" [(ngModel)]="fullName">
+          <div class="tour-info">
+            <div class="mb-3">
+              <label class="form-label">Họ tên</label>
+              <input type="text" class="form-control" [(ngModel)]="fullName">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Số điện thoại</label>
+              <input type="text" class="form-control" [(ngModel)]="phoneNumber">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Ghi chú</label>
+              <textarea class="form-control" [(ngModel)]="notes"></textarea>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">Số điện thoại</label>
-            <input type="text" class="form-control" [(ngModel)]="phoneNumber">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" [(ngModel)]="email">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Ghi chú</label>
-            <textarea class="form-control" [(ngModel)]="notes"></textarea>
+
+          <div class="personal-info">
+
+            <label class="form-label">Ngày bắt đầu:</label>
+            <div class="input-group mb-3">
+              <input type="date" class="form-control" id="start-date" name="start-date" [(ngModel)]="startDate"
+                (change)="updateEndDate()">
+            </div>
+
+            <label class="form-label">Ngày kết thúc:</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control text-center" [value]="endDate ? endDate.toLocaleDateString() : ''"
+                readonly>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center my-3">
+              <span>Người lớn:</span>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm btn-outline-dark" (click)="decreaseAdults()">-</button>
+                <span class="mx-2">{{ adults }}</span>
+                <button class="btn btn-sm btn-outline-dark" (click)="increaseAdults()">+</button>
+              </div>
+            </div>
+            <div class="text-end">{{ (adults * adultPrice) | number }} VNĐ</div>
+
+            <!-- Trẻ em -->
+            <div class="d-flex justify-content-between align-items-center my-3">
+              <span>Trẻ em:</span>
+              <div class="d-flex align-items-center">
+                <button class="btn btn-sm btn-outline-dark" (click)="decreaseChildren()">-</button>
+                <span class="mx-2">{{ children }}</span>
+                <button class="btn btn-sm btn-outline-dark" (click)="increaseChildren()">+</button>
+              </div>
+            </div>
+            <div class="text-end">{{ (children * childPrice) | number }} VNĐ</div>
+            <hr>
+            <strong>Tổng tiền: {{ totalPrice | number }} VNĐ</strong>
+
           </div>
         </div>
         <div class="modal-footer">

@@ -34,6 +34,14 @@ main {
   box-shadow: 0 1px 2px 0 rgb(0, 0, 0);
 }
 
+.relate-combo {
+  margin-top: 50px;
+
+  h3 {
+    margin-bottom: 30px;
+  }
+}
+
 .subtitle {
   margin-bottom: 30px;
 }
@@ -72,6 +80,7 @@ main {
   .text-end {
     margin: 5px;
   }
+
   hr {
     margin: 10px;
   }
@@ -212,6 +221,13 @@ main {
   }
 }
 
+.show-reviews {
+  cursor: pointer;
+  color: rgb(0, 123, 255);
+  text-decoration: underline;
+  font-size: small;
+}
+
 .show {
   display: block;
 }
@@ -221,5 +237,52 @@ main {
 }
 
 .review-table-display {
-    display: none;
+  display: none;
+}
+
+.modal-body {
+  display: flex;
+  gap: 20px;
+}
+
+// code lọc feedback theo sao
+.btn-choice {
+  background-color: white;
+  color: gold;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 0.5px solid #000;
+  height: 40px;
+  width: 100px;
+  &:hover {
+    border: none;
+  }
+  &:active {
+    background-color: #28e5e5;
+  }
+
+}
+
+// code feedback
+.btn-submit {
+  background-color: #28e5e5;
+  border-radius: 5px;
+  border: none;
+  height: 35px;
+  width: 120px;
+  font-weight: bold;
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: pink;
+  color: black;
+}
+
+.feedback-avatar {
+  height: 50px;
+}
+
+#rating {
+  color: gold;
 }

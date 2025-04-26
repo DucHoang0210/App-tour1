@@ -1,31 +1,77 @@
 <main>
-  <!-- register form -->
-<div class="wrapper register">
-  <form>
-    <h2>Register</h2>
-    <div class="input-field">
-      <input type="text" required>
-      <label>Enter your email</label>
-    </div>
-    <div class="input-field">
-      <input type="password" required>
-      <label>Enter your password</label>
-    </div>
-    <div class="input-field">
-      <input type="password" required>
-      <label>Confirm your password</label>
-    </div>
-    <div class="forget">
-      <label for="remember">
-        <input type="checkbox" id="remember">
-        <p>Remember me</p>
-      </label>
-    </div>
-    <button type="submit">Register</button>
-    <div class="choice-mode">
-      <p>You have an account? <a href="/login">Login</a></p>
-    </div>
-  </form>
-</div>
+  <div class="wrapper register">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <h2>Register</h2>
 
+      <!-- Username -->
+      <div class="input-field">
+        <input
+          type="text"
+          formControlName="username"
+          required
+          [class.invalid]="username.invalid && submitted"
+        />
+        <label>Enter your username</label>
+        <small *ngIf="username.invalid && submitted" class="error">
+          Username must only contain letters and numbers.
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="input-field">
+        <input
+          type="text"
+          formControlName="email"
+          required
+          [class.invalid]="email.invalid && submitted"
+        />
+        <label>Enter your email</label>
+        <small *ngIf="email.invalid && submitted" class="error">
+          Please enter a valid email.
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="input-field">
+        <input
+          type="password"
+          formControlName="password"
+          required
+          [class.invalid]="password.invalid && submitted"
+        />
+        <label>Enter your password</label>
+        <small *ngIf="password.invalid && submitted" class="error">
+          Password must be at least 6 characters long.
+        </small>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="input-field">
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          required
+          [class.invalid]="confirmPassword.invalid && submitted"
+        />
+        <label>Confirm your password</label>
+        <small *ngIf="(confirmPassword.errors?.['mismatch'] || confirmPassword.invalid) && submitted" class="error">
+          Passwords must match.
+        </small>
+      </div>
+
+      <!-- Remember Me -->
+      <div class="forget">
+        <label for="remember">
+          <input type="checkbox" id="remember" formControlName="rememberMe" />
+          <p>Remember me</p>
+        </label>
+      </div>
+
+      <button type="submit">Register</button>
+
+      <div class="choice-mode">
+        <p>You have an account? <a href="/login">Login</a></p>
+      </div>
+    </form>
+  </div>
 </main>

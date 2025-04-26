@@ -10,20 +10,17 @@
     <div class="product-slider">
       <button class="slide prev" (click)="scroll('left', 0)">❮</button>
       <div #productContainer class="row">
-        <div class="col-lg-2 col-md-6">
+        <div *ngFor="let tour of tours" class="col-lg-2 col-md-6">
           <div class="product-card" (click)="navigateToDetail()">
             <img src="/assets/images/anhProduct.jpg" alt="Product 1">
-            <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
-            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
-            <p class="product-time">4 ngày 3 đêm</p>
+            <i class="fa-solid fa-location-dot"><a> {{ tour.location }}</a></i>
+            <h2 class="name-product">{{ tour.title }}</h2>
+            <p class="product-time">{{ tour.duration }}</p>
             <hr>
-            <p class="price">Giá: <del>$250</del> $100</p>
+            <p class="price">Giá: <del>{{ tour.oldPrice }}</del> {{ tour.salePrice }} VNĐ</p>
             <div class="product-rating">
+              <strong>{{ tour.rating }} </strong>
               <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-regular fa-star"></i>
             </div>
           </div>
         </div>
@@ -38,24 +35,17 @@
     <div class="product-slider">
       <button class="slide prev" (click)="scroll('left', 1)">❮</button>
       <div #productContainerNew class="row">
-        <div class="col-lg-2 col-md-6">
+        <div *ngFor="let tour of tours" class="col-lg-2 col-md-6">
           <div class="product-card" (click)="navigateToDetail()">
             <img src="/assets/images/anhProduct.jpg" alt="Product 1">
-            <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
-            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
-            <p class="product-time">4 ngày 3 đêm</p>
+            <i class="fa-solid fa-location-dot"><a> {{ tour.location }}</a></i>
+            <h2 class="name-product">{{ tour.title }}</h2>
+            <p class="product-time">{{ tour.duration }}</p>
             <hr>
-            <p class="price">Giá: <del>$250</del> $100</p>
+            <p class="price">Giá: <del>{{ tour.oldPrice }}</del> {{ tour.salePrice }} VNĐ</p>
             <div class="product-rating">
+              <strong>{{ tour.rating }} </strong>
               <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-solid fa-star"></i>
-              <i class="fa-regular fa-star"></i>
-            </div>
-            <div class="product-action">
-              <button class="btn contact">Liên hệ</button>
-              <button class="btn book">Đặt ngay</button>
             </div>
           </div>
         </div>

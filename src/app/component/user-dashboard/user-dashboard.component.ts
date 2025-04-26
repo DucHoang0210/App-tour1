@@ -11,11 +11,14 @@ import { Router } from '@angular/router';
   styleUrl: './user-dashboard.component.scss'
 })
 export class UserDashboardComponent {
-  name = 'Nguyễn Văn A';
-  rank = 'Silver';
-  userName = 'NGVanA123';
-  userEmail = 'NguyenA@gmail.com';
-  userPhone = '0987654321';
+  userInfo = {
+    name: 'Nguyễn Văn A',
+    avatar: '/assets/images/avatar-user.jpg',
+    rank: 'Silver',
+    userName: 'NGVanA123',
+    userEmail: 'NguyenA@gmail.com',
+    userPhone: '0987654321'
+  }
 
   bookings = [
     {
@@ -72,10 +75,6 @@ export class UserDashboardComponent {
   isProfile = true;
   isHistory = false;
   isEdit = false;
-userForm: any;
-email: any;
-username: any;
-phone: any;
 
   toggleHistory() {
     this.isHistory = true;
@@ -107,64 +106,8 @@ phone: any;
     this.router.navigate(['/register']); // thay bằng route bạn muốn
   }
 
-  // CODE CHO FORM ĐỔI MẬT KHẨU
-  isChangeForm = false;
-
   changePassword() {
-    this.isChangeForm = !this.isChangeForm;
-  }
-
-  currentPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
-  currentPasswordError: string = '';
-  newPasswordError: string = '';
-  confirmPasswordError: string = '';
-
-  // Hàm xử lý sự kiện khi form được submit
-  onSubmit(): void {
-    let valid = true;
-
-    // Reset lỗi
-    this.currentPasswordError = '';
-    this.newPasswordError = '';
-    this.confirmPasswordError = '';
-
-    // Kiểm tra mật khẩu hiện tại
-    if (!this.currentPassword) {
-      this.currentPasswordError = 'Mật khẩu hiện tại không được bỏ trống.';
-      valid = false;
-    }
-
-    // Kiểm tra mật khẩu mới
-    if (!this.newPassword) {
-      this.newPasswordError = 'Mật khẩu mới không được bỏ trống.';
-      valid = false;
-    } else if (this.newPassword.length < 6) {
-      this.newPasswordError = 'Mật khẩu mới phải có ít nhất 6 ký tự.';
-      valid = false;
-    }
-
-    // Kiểm tra mật khẩu nhập lại
-    if (this.newPassword !== this.confirmPassword) {
-      this.confirmPasswordError = 'Mật khẩu nhập lại không khớp.';
-      valid = false;
-    }
-
-    // Nếu tất cả hợp lệ, hiển thị thông báo thành công
-    if (valid) {
-      alert('Đổi mật khẩu thành công!');
-    }
-  }
-
-  // Hàm xử lý khi người dùng bấm nút hủy
-  onCancel(): void {
-    this.currentPassword = '';
-    this.newPassword = '';
-    this.confirmPassword = '';
-    this.currentPasswordError = '';
-    this.newPasswordError = '';
-    this.confirmPasswordError = '';
+    this.router.navigate(['/change-password']);
   }
 
   // Hàm xử lý lưu thông tin thay đổi
@@ -172,32 +115,32 @@ phone: any;
   phonePattern = /^0\d{9,10}$/;
   userNamePattern = /^[a-zA-Z0-9_]+$/;
   // biến để lưu tạm các giá trị
-  userName1 = this.userName;
-  userPhone1 = this.userPhone;
-  userEmail1 = this.userEmail;
+  userName1 = this.userInfo.userName;
+  userPhone1 = this.userInfo.userPhone;
+  userEmail1 = this.userInfo.userEmail;
 
   logUserEmail() {
     let valid = true;
 
-    if (!this.emailPattern.test(this.userEmail)) {
+    if (!this.emailPattern.test(this.userInfo.userEmail)) {
       alert('Email không hợp lệ, vui lòng nhập lại email!');
-      this.userEmail = this.userEmail1;
+      this.userInfo.userEmail = this.userEmail1;
       valid = false;
     }
-    if (!this.phonePattern.test(this.userPhone)) {
+    if (!this.phonePattern.test(this.userInfo.userPhone)) {
       alert('Số điện thoại không hợp lệ, vui lòng nhập lại bắt đầu bằng số 0!');
-      this.userPhone = this.userPhone1
+      this.userInfo.userPhone = this.userPhone1
       valid = false;
     }
-    if (!this.userNamePattern.test(this.userName)) {
+    if (!this.userNamePattern.test(this.userInfo.userName)) {
       alert('Tên đăng nhập không hợp lệ, vui lòng nhập lại!');
       valid = false;
-      this.userName = this.userName1;
+      this.userInfo.userName = this.userName1;
     }
     if (valid) {
-      this.userEmail1 = this.userEmail;
-      this.userName1 = this.userName;
-      this.userPhone1 = this.userPhone;
+      this.userEmail1 = this.userInfo.userEmail;
+      this.userName1 = this.userInfo.userName;
+      this.userPhone1 = this.userInfo.userPhone;
       alert('Lưu thông tin thành công');
     }
   }

@@ -1,10 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -37,4 +38,41 @@ export class HeaderComponent {
   onHome() {
     this.router.navigate(['']); // thay bằng route bạn muốn
   }
+
+  onContact() {
+    this.router.navigate(['/contact']);
+  }
+
+  onIntro() {
+    this.router.navigate(['/introduction']);
+  }
+
+  onTravelTips() {
+    this.router.navigate(['/travel-tips']);
+  }
+
+  showInput = false;
+  searchText = '';
+  originalItems: string[] = ['Apple', 'Banana', 'Orange', 'Grapes', 'Mango'];
+  filteredItems: string[] = [];
+
+  toggleSearch() {
+    this.showInput = !this.showInput;
+    if (!this.showInput) {
+      this.searchText = '';
+      this.filteredItems = [];
+    }
+  }
+
+  filterData() {
+    const keyword = this.searchText.toLowerCase().trim();
+    if (keyword.length > 0) {
+      this.filteredItems = this.originalItems.filter(item =>
+        item.toLowerCase().includes(keyword)
+      );
+    } else {
+      this.filteredItems = []; // Nếu không có keyword, clear danh sách
+    }
+  }
+
 }

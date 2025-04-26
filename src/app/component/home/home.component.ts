@@ -1,13 +1,34 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Tour } from 'app/models/tour';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [ CommonModule ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  tours: Tour[] = [{
+    title: 'BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (khởi hành mỗi ngày)',
+    location: 'đảo Phú Quốc',
+    oldPrice: 6000000,
+    salePrice: 4900000,
+    duration: '4 ngày 3 đêm',
+    rating: 4.9
+  },
+  {
+    title: 'BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (khởi hành mỗi ngày)',
+    location: 'đảo Phú Quốc',
+    oldPrice: 6000000,
+    salePrice: 4900000,
+    duration: '4 ngày 3 đêm',
+    rating: 4.9
+  }
+]
+
 
   // cuon trang cho bill khong cuon theo
   @ViewChild('productContainer', { static: false }) productContainer!: ElementRef;
@@ -15,7 +36,7 @@ export class HomeComponent {
   scroll(direction: string, index: number) {
     const rows = document.querySelectorAll('.row');
     if (!rows[index]) {
-      console.error("Không tìm thấy row với index:", index);
+      console.error("Không tìm thấ  y row với index:", index);
       return;
     }
 
@@ -35,7 +56,7 @@ export class HomeComponent {
   }
 
   // click vao san pham
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   navigateToDetail() {
     this.router.navigate(['/detail-tour']);
