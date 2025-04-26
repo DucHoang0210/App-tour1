@@ -1,0 +1,127 @@
+// travel-introduction.component.scss
+
+// Các biến cho màu sắc và thời gian
+$primary-color: #3498db;
+$secondary-color: #2c3e50;
+$animation-duration: 0.8s;
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-300px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(300px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(50px);
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50px);
+  }
+}
+
+// main {
+//   background-image: ;
+// }
+
+// Các hiệu ứng cho từng section
+.slide-in-left {
+  animation: slideFromLeft $animation-duration ease-out forwards;
+}
+
+.slide-in-right {
+  animation: slideFromRight $animation-duration ease-out forwards;
+}
+
+.slide-in-top {
+  animation: slideFromTop $animation-duration ease-out forwards;
+}
+
+.slide-in-bottom {
+  animation: slideFromBottom $animation-duration ease-out forwards;
+}
+
+// Mặc định ẩn các section
+.section {
+  background-color: #ffffff;
+  opacity: 0;  // Bắt đầu ẩn
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.img-intro {
+  justify-content: space-between;
+  padding: 100px 40px;
+  gap: 10px;
+  .img {
+
+    height: 300px;
+    width: 300px;
+    img {
+      border-radius: 10px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.container {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+}
+
+.page-title {
+  text-align: center;
+  color: $secondary-color;
+  font-size: 36px;
+}
+
+h2 {
+  color: $primary-color;
+  font-size: 28px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+strong {
+  color: $secondary-color;
+}
