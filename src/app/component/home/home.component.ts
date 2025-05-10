@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {Tour} from '../../models/tour';
 import {TourService} from '../../services/tour.service';
+import {Image} from '../../models/image';
 @Component({
   selector: 'app-home',
   imports: [CommonModule],
@@ -15,6 +16,7 @@ export class HomeComponent implements OnInit{
     // Load dữ liệu từ service hoặc gán dữ liệu giả để hiển thị
     this.loadTours();
   }
+
   loadTours() {
     this.tourService.getAllTours().subscribe({
       next: (data) => {

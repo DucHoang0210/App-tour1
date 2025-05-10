@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as bootstrap from 'bootstrap';
 import { MapComponent } from "../map/map.component";
+import Swal from 'sweetalert2';
 import {ActivatedRoute} from '@angular/router';
 import {TourService} from '../../services/tour.service';
 import {Tour} from '../../models/tour';
@@ -12,6 +13,11 @@ import {Router} from '@angular/router';
 import {BookingService} from '../../services/booking.service';
 import {LoginService} from '../../services/login.service';
 import {PaymentService} from '../../services/payment.service';
+// Khai báo tạm nếu không có types
+import { Client, IMessage, Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
+import {Route} from '@angular/router';
+import {ReviewCard} from '../../models/reviewCard';
 
 @Component({
   selector: 'app-detail-tour',
@@ -25,12 +31,17 @@ export class DetailTourComponent implements OnInit{
   tour: Tour = new Tour;
   images : Image[] = [];
   itinerarys : Itinerary[] = [];
+  username! : string;
+
   adultPrice: number = 0;
   childPrice: number = 0;
   userId!: number;
-
+  public isModalOpen = false;
+  public header = '';
+  public message = '';
+  private socket: WebSocket | undefined;
   constructor(private route : ActivatedRoute, private tourService: TourService, private bookingService: BookingService,
-              private rt: Router, private loginService : LoginService, private paymentService: PaymentService ) {
+              private rt: Router, private loginService : LoginService, private paymentService: PaymentService, private router: Router) {
   }
   ngOnInit(): void {
     this.tourID = Number(this.route.snapshot.params['tourID']);
@@ -38,8 +49,46 @@ export class DetailTourComponent implements OnInit{
     this.inforTourDetail();
     this.listImages();
     this.listItinerary();
-
+    // this.connectWebSocket();
   }
+  // connectWebSocket() {
+  //   const socket = new SockJS('http://localhost:8080/ws');
+  //   const stompClient = new Client({
+  //     webSocketFactory: () => socket,
+  //     debug: (str) => console.log(str),
+  //     reconnectDelay: 5000,
+  //     onConnect: () => {
+  //       console.log('WebSocket connected');
+  //       stompClient.subscribe(`/topic/tour/${this.tourID}`, (message) => {
+  //         console.log('Received message:', message.body);
+  //         if (message.body === 'success') {
+  //           this.header = 'Thanh toán thành công';
+  //           this.message = 'Vé của bạn đã thanh toán thành công!';
+  //           this.isModalOpen = true;
+  //         } else if (message.body === 'fail') {
+  //           this.header = 'Thanh toán thất bại';
+  //           this.message = 'Đã xảy ra lỗi trong quá trình thanh toán!';
+  //           this.isModalOpen = true;
+  //         }
+  //       });
+  //     },
+  //     onStompError: (frame) => {
+  //       console.error('STOMP Error:', frame);
+  //     }
+  //   });
+  //
+  //   stompClient.activate();
+  // }
+
+  onModalClose(): void {
+    this.isModalOpen = false;
+    if (this.header.includes('thành công')) {
+      this.router.navigate(['/my/ticket']);
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
   getUser = () =>{
     this.loginService.getUser().subscribe({
       next: (response) => {
@@ -50,8 +99,8 @@ export class DetailTourComponent implements OnInit{
       }
     })
   }
-  listImages(){
 
+  listImages(){
     this.tourService.getImageDetail(this.tourID).subscribe({
       next: (response) => {
         this.images = response;
@@ -71,7 +120,6 @@ export class DetailTourComponent implements OnInit{
   }
 
   inforTourDetail(){
-
     this.tourService.getTourById(this.tourID).subscribe({
       next: (response) => {
         this.tour = response.tour;
@@ -213,7 +261,7 @@ export class DetailTourComponent implements OnInit{
               console.log(response);
               const paymentUrl = response.body.data.paymentUrl;
               window.open(paymentUrl, '_blank');
-              
+
             },
             error: error => {
               console.log(error);
@@ -227,5 +275,130 @@ export class DetailTourComponent implements OnInit{
     });
     alert('Đặt tour thành công!');
   }
-}
+
+  // review
+  reviews: ReviewCard[] = [
+    {
+      name: 'Nguyen Van Hung',
+      avatar: '/assets/images/customerReview.jpg',
+      rating: 5,
+      date: new Date('2025-04-20'),
+      content: 'Tôi rất hài lòng với dịch vụ của tour. Nhân viên tư vấn nhiệt tình, hướng dẫn viên chuyên nghiệp, am hiểu địa phương. Lịch trình hợp lý, phương tiện di chuyển sạch sẽ, khách sạn và nhà hàng chất lượng. Một trải nghiệm tuyệt vời, đáng để giới thiệu!'
+    },
+    {
+      name: 'Tran Thi Bien',
+      avatar: '/assets/images/avt-review.jpg',
+      rating: 4,
+      date: new Date('2025-04-18'),
+      content: 'Tour khá ổn, hướng dẫn viên nhiệt tình...'
+    },
+    {
+      name: 'Hoang Van Hoa',
+      avatar: '/assets/images/avt-review.jpg',
+      rating: 5,
+      date: new Date('2025-04-05'),
+      content: 'Tour khá ổn, hướng dẫn viên nhiệt tình...'
+    },
+    {
+      name: 'Tran Van Dung',
+      avatar: '/assets/images/avt-review.jpg',
+      rating: 5,
+      date: new Date('2025-01-18'),
+      content: 'Tour khá ổn, hướng dẫn viên nhiệt tình...'
+    }]
+
+  get countReviewCard(): number {
+    return this.reviews.length;
+  }
+
+  total = this.reviews.reduce((sum, review) => sum + Number(review.rating), 0);
+  averageRating: number = this.reviews.length ? this.total / this.reviews.length : 0;
+
+  calculateAverageRating() {
+    const total = this.reviews.reduce((sum, review) => sum + Number(review.rating), 0);
+    this.averageRating = this.reviews.length ? total / this.reviews.length : 0;
+  }
+
+  get ratingPercentages() {
+    const total = this.reviews.length;
+    const percentages: { [key: number]: number } = {
+      5: 0,
+      4: 0,
+      3: 0,
+      2: 0,
+      1: 0
+    };
+
+    if (total === 0) return percentages;
+
+    this.reviews.forEach(review => {
+      const r = review.rating;
+      if (percentages[r] !== undefined) {
+        percentages[r]++;
+      }
+    });
+
+    // Tính phần trăm
+    for (const star in percentages) {
+      percentages[star] = Math.round((percentages[star] / total) * 100);
+    }
+
+    return percentages;
+  }
+
+  // // Lọc review theo số sao đánh giá
+  selectedStar: number = 0; // 0 nghĩa là không lọc
+
+  get filteredReviews(): ReviewCard[] {
+    if (this.selectedStar === 0) {
+      return this.reviews;
+    }
+    return this.reviews.filter(review => review.rating === this.selectedStar);
+  }
+
+  // Thêm mới review của khách hàng
+  newReview: ReviewCard = {
+    name: '',
+    avatar: '/assets/images/default-avatar.jpg', // avatar mặc định
+    rating: 5,
+    date: new Date(),
+    content: ''
+  };
+
+  submitReview() {
+    if (!this.newReview.content.trim()) {
+      alert('Vui lòng nhập nội dung đánh giá.');
+      return;
+    }
+
+    const reviewToAdd: ReviewCard = {
+      ...this.newReview,
+      name: this.username,
+      rating: Number(this.newReview.rating), // Ép kiểu để tránh lỗi tính toán
+      date: new Date()
+    };
+
+    this.reviews.unshift(reviewToAdd); // Thêm vào đầu danh sách
+    this.calculateAverageRating();     // ✅ Cập nhật điểm trung bình
+
+    // Reset form đánh giá
+    this.newReview = {
+      name: '',
+      avatar: '/assets/images/default-avatar.jpg',
+      rating: 5,
+      date: new Date(),
+      content: ''
+    };
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Cảm ơn bạn!',
+      text: 'Đánh giá của bạn đã được ghi nhận.'
+    });
+  }
+  showAllReviews: boolean = false;
+  toggleReviews() {
+    this.showAllReviews = !this.showAllReviews;
+  }
+  }
 

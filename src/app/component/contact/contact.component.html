@@ -1,0 +1,44 @@
+<main>
+  <div class="contact-container">
+    <div class="chat-window">
+      <div class="chat-header">💬 TRAVELAKÀ</div>
+      <div class="messages">
+        <div *ngFor="let msg of messages" [class.self]="msg.from === 'You'">
+          <span>{{ msg.text }}</span>
+        </div>
+      </div>
+      <div class="input-box">
+        <input [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Type a message..." />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+
+    <div class="logo-container d-flex flex-column">
+      <div class="contact-option zalo">
+        <div class="chat-bubble right" [ngClass]="{ 'showInfo': hoverIndex === 1, 'hideInfo': hoverIndex !== 1 }">
+          {{ zalo }}
+        </div>
+        <img (mouseenter)="showInfo(1)" (mouseleave)="hideInfo()" src="/assets/images/logo-zalo.jpg">
+      </div>
+      <div class="contact-option phone">
+        <div class="chat-bubble right" [ngClass]="{ 'showInfo': hoverIndex === 2, 'hideInfo': hoverIndex !== 2 }">
+          {{ phone }}
+        </div>
+        <img (mouseenter)="showInfo(2)" (mouseleave)="hideInfo()" src="/assets/images/phone-icon.png">
+      </div>
+      <div class="contact-option messenger">
+        <div class="chat-bubble right" [ngClass]="{ 'showInfo': hoverIndex === 3, 'hideInfo': hoverIndex !== 3 }">
+          {{ facebook }}
+        </div>
+        <img (mouseenter)="showInfo(3)" (mouseleave)="hideInfo()" src="/assets/images/messenger-icon.png">
+      </div>
+      <div class="contact-option instagram">
+        <div class="chat-bubble right" [ngClass]="{ 'showInfo': hoverIndex === 4, 'hideInfo': hoverIndex !== 4 }">
+          {{ instagram }}
+        </div>
+        <img (mouseenter)="showInfo(4)" (mouseleave)="hideInfo()" src="/assets/images/Instagram_icon.png">
+      </div>
+    </div>
+  </div>
+
+</main>

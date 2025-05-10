@@ -5,7 +5,7 @@
   </div>
   <div class="nav-menu">
     <div class="nav-item" (click)="onHome()">Trang Chủ</div>
-    <div class="nav-item" href="#">Giới Thiệu</div>
+    <div class="nav-item" (click)="onIntro()">Giới Thiệu</div>
     <div class="nav-item dropdown">
       <span class="dropdown-title" (click)="toggleDropdown()">Tours ▼</span>
       <ul class="dropdown-menu" [ngClass]="{'show': isDropdownVisible}">
@@ -14,11 +14,17 @@
         <li><a href="#">Miền Nam</a></li>
       </ul>
     </div>
-    <div class="nav-item" href="#">Điểm Đến</div>
-    <div class="nav-item" href="#">Liên Hệ</div>
+    <div class="nav-item" (click)="onTravelTips()">Kinh Nghiệm Du Lịch</div>
+    <div class="nav-item" (click)="onContact()">Liên Hệ</div>
   </div>
+
   <div class="nav-tool">
-    <i class="fa-solid fa-magnifying-glass" id="search"></i>
+    <input  type="text" placeholder="Tìm kiếm..." [(ngModel)]="searchText" (input)="filterData()" class="search-input p-2 flex-1" />
+    <div class="search-result" [ngClass]="{'show': showInput }">
+      <div class="result-item" *ngFor="let item of originalItems">{{ item   }}</div>
+    </div>
+
+    <i class="fa-solid fa-magnifying-glass" (click)="toggleSearch()" id="search"></i>
     <button class="bookNow">Book Now</button>
     <div class="nav-tool dropdown" (click)="toggleMenu()">
       <i class="fa-solid fa-user" id="user"></i>
@@ -27,12 +33,5 @@
         <li><a href="/register">Đăng xuất</a></li>
       </ul>
     </div>
-
-    <!-- <i class="fa-solid fa-user" id="user"></i>
-    <ul class="user-menu" [ngClass]="{'showMenu': isMenuVisible, 'hideMenu': !isMenuVisible}">
-      <li><a href="/user-dashboard">Cài đặt</a></li>
-      <li><a href="/register">Đăng xuất</a></li>
-    </ul>
-     -->
   </div>
 </div>

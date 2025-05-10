@@ -1,0 +1,15 @@
+<main>
+  <section class="travel-tips-container">
+    <h2>Kinh Nghiệm Du Lịch</h2>
+    <div class="tips-grid">
+      <div class="tip-card" *ngFor="let tip of tips">
+        <img [src]="tip.image" alt="{{ tip.title }}">
+        <div class="tip-content">
+          <h3>{{ tip.title }}</h3>
+          <p>{{ tip.summary }}</p>
+          <button class="read-more">Xem thêm</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

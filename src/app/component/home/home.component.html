@@ -1,7 +1,30 @@
 <main>
-  <div class="wellcome">
-    <h1>TOUR DU LỊCH</h1>
-    <p>TRALVELAKÀ đưa bạn đi muôn nơi...</p>
+  <div class="welcome">
+    <div class="slider-container">
+      <div class="slider">
+        <div class="slide">
+          <img src="https://images.pexels.com/photos/163168/mountains-summit-winter-snow-163168.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tour 1">
+          <div class="slide-content">
+            <h1>TOUR DU LỊCH</h1>
+            <p>TRALVELAKÀ đưa bạn đi muôn nơi...</p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="https://images.pexels.com/photos/2161449/pexels-photo-2161449.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tour 2">
+          <div class="slide-content">
+            <h1>KHÁM PHÁ</h1>
+            <p>Những điểm đến tuyệt vời</p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="https://images.pexels.com/photos/2161467/pexels-photo-2161467.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Tour 3">
+          <div class="slide-content">
+            <h1>TRẢI NGHIỆM</h1>
+            <p>Những khoảnh khắc đáng nhớ</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="VietNam-tour">
     <h1>Khám phá kho tàng du lịch Việt Nam</h1>
@@ -39,24 +62,20 @@
     <div class="product-slider">
       <button class="slide prev" (click)="scroll('left', 1)">❮</button>
       <div #productContainerNew class="row">
-        <div class="col-lg-2 col-md-6">
-          <div class="product-card" >
-            <img src="/assets/images/anhProduct.jpg" alt="Product 1">
+        <div class="col-lg-2 col-md-6" *ngFor="let tour of tours" >
+          <div class="product-card" (click)="navigateToDetail(tour.tourID)">
+            <img [src]="tour.image || '/assets/images/default-tour.jpg'"  class="object-fit-cover" style="height: 200px;">
             <i class="fa-solid fa-location-dot"><a>đảo Phú Quốc</a></i>
-            <h2 class="name-product">BIỂN ĐẢO 4N3Đ | PHÚ QUỐC (Khởi hành mỗi ngày)</h2>
+            <h2 class="name-product">{{tour.title}}</h2>
             <p class="product-time">4 ngày 3 đêm</p>
             <hr>
-            <p class="price">Giá: <del>$250</del> $100</p>
+            <p class="price">Giá: <del>{{tour.priceAdult}}</del> $100</p>
             <div class="product-rating">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-regular fa-star"></i>
-            </div>
-            <div class="product-action">
-              <button class="btn contact">Liên hệ</button>
-              <button class="btn book">Đặt ngay</button>
             </div>
           </div>
         </div>

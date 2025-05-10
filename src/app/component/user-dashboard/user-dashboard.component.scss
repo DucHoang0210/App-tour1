@@ -1,234 +1,266 @@
-.container {
-  width: 100%;
-  height: 80%;
-}
 
+   main {
+     min-height: 100vh;
+     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+     padding: 2rem 0;
+
+     .container {
+       gap: 2rem;
+     }
+   }
+
+// Menu Sidebar
 .menu {
-  width: 15%;
-  background-color: #28e5e5;
-  padding: 5px 10px;
-  justify-content: space-between;
-  display: flex;
-}
-
-.menu-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 10px;
-  gap: 10px;
-
-  span {
-    flex-grow: 1;
-    text-align: center;
-  }
-
-  &:hover {
-    background-color: pink;
-  }
-}
-
-.content {
-  flex-grow: 1;
-  min-height: 500px;
-  // padding: 50px;
-}
-
-.avatar {
-  gap: 50px;
-  align-items: center;
-  margin-bottom: 40px;
-
-  img {
-    width: 200px;
-    height: 200px;
-  }
-}
-
-.info {
-  justify-content: space-between;
-  gap: 20px;
-  margin: 0 50px;
-
-  label {
-    font-weight: 800;
-  }
-
-  input {
-    width: 300px;
-    padding: 5px;
-    border-radius: 10px;
-
-  }
-}
-
-// CODE PROFILE
-.profile {
-  margin: 0 100px;
-
-  i {
-    cursor: pointer;
-  }
-}
-
-// CODE lich su dat tour
-.history-container {
-  overflow-y: auto;
-}
-
-.table-container {
-  max-height: 300px;
-  /* hoặc bạn tùy chỉnh theo ý, ví dụ 6 dòng ~ 300px */
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  /* Optional: cho rõ khung */
-}
-
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
-}
-
-thead {
-  background-color: #f0f0f0;
+  width: 280px;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  height: fit-content;
   position: sticky;
-  z-index: 1;
-  top: 0;
-}
+  top: 2rem;
 
-//code cho editprofile
-.edit {
-  padding-bottom: 0;
-
-  .action-btn {
-    border-radius: 5px;
-    width: 150px;
-    height: 40px;
-    border: none;
-    background-color: #28e5e5;
-    font-weight: bold;
-    margin-top: 60px;
+  .menu-item {
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
 
     &:hover {
-      background-color: pink;
+      background: #f0f7ff;
+      transform: translateX(5px);
+    }
+
+    i {
+      color: #1a73e8;
+      width: 24px;
+      margin-right: 12px;
+    }
+
+    .menu-text {
+      color: #444;
     }
   }
 }
 
+// Content Area
+.content {
+  flex: 1;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+
+  // Profile Section
+  .profile {
+    .avatar {
+      margin-bottom: 2rem;
+
+      .avatar-img {
+        position: relative;
+        margin-right: 1.5rem;
+
+        img {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+          border: 4px solid #fff;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+      }
+
+      .name {
+        h5 {
+          font-size: 1.5rem;
+          margin-bottom: 0.5rem;
+          color: #333;
+        }
+
+        .rank {
+          background: linear-gradient(45deg, #1a73e8, #8ab4f8);
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .info {
+      gap: 1.5rem;
+
+      div {
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+
+        label {
+          color: #666;
+          font-weight: 500;
+        }
+
+        input {
+          border: none;
+          text-align: right;
+          color: #333;
+          font-weight: 500;
+          width: 60%;
+
+          &:focus {
+            outline: none;
+            background: #f0f7ff;
+            padding: 0.5rem;
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  // History Table
+  .history-container {
+    h2 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .table-container {
+      overflow-x: auto;
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        th, td {
+          padding: 1rem;
+          text-align: left;
+          border-bottom: 1px solid #eee;
+        }
+
+        th {
+          background: #f8f9fa;
+          font-weight: 600;
+          color: #444;
+        }
+
+        tr:hover td {
+          background: #f0f7ff;
+        }
+      }
+    }
+  }
+
+  // Edit Profile
+  .edit {
+    .edit-icon {
+      color: #1a73e8;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: all 0.3s;
+
+      &:hover {
+        background: #f0f7ff;
+      }
+    }
+
+    .action-setting {
+      margin-top: 2rem;
+      gap: 1rem;
+
+      .action-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+        transition: all 0.3s;
+
+        &.edit-password {
+          background: #f0f7ff;
+          color: #1a73e8;
+
+          &:hover {
+            background: #e0eeff;
+          }
+        }
+
+        &.save {
+          background: #1a73e8;
+          color: white;
+
+          &:hover {
+            background: #1557b0;
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation Classes
 .show {
-  display: block;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .hide {
   display: none;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-// CSS ĐỔI MẬT KHẨU
-
+// Modal Styling
 .modal {
-  background: white;
-  padding: 30px;
-  border-radius: 8px;
-  align-items: center;
-  max-width: 400px;
-  top: auto !important;
-  left: auto !important;
-  height: 500px;
-  overflow: hidden;
-  --bs-modal-margin: 0rem;
+  .modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem;
+
+    h5 {
+      color: #333;
+      font-weight: 600;
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 0.8rem;
+
+      &:focus {
+        border-color: #1a73e8;
+        box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
+      }
+    }
+  }
+
+  .modal-footer {
+    border-top: 1px solid #eee;
+    padding: 1.5rem;
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+  }
 }
 
-.text-danger {
-  font-size: 0.875rem;
-  color: red;
-}
-
-// code doi mat khau
-/* Giống như phần CSS trong ví dụ trước */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.form-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-input:focus {
-  border-color: #4caf50;
-}
-
-.error-message {
-  color: red;
-  font-size: 12px;
-  display: block;
-}
-
-.form-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  background-color: #4caf50;
-  color: white;
-}
-
-button[type="button"] {
-  background-color: #f44336;
-}
-
-button[type="submit"]:hover,
-button[type="button"]:hover {
-  opacity: 0.9;
-}

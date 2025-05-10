@@ -104,7 +104,6 @@
       background-color: #28e5e5;
     }
 
-
   }
 }
 
@@ -129,6 +128,38 @@
     border-radius: 50%;
     /* Biến thành hình tròn */
     position: relative;
+  }
+
+  .search-input {
+    border-radius: 20px;
+    position: absolute;
+    right: 210px;
+  }
+
+  .list-disc {
+    position: absolute;
+    right: 200px;
+    top: 80px;
+  }
+
+  .search-result {
+    display:  none;
+    opacity: 0;
+    background-color: white;
+    min-height: 300px;
+    width: 400px;
+    position: absolute;
+    top: 80px;
+    right: 100px;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 20px ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .result-item {
+      height: 50px;
+    }
   }
 
   .fa-solid {

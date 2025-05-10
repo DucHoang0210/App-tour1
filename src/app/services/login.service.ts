@@ -11,6 +11,7 @@ export class LoginService {
   Login(username: string, password: string) : Observable<any> {
     return this.http.post('http://localhost:8080/api/auth/login',{username:username,password:password},{observe: 'response'});
   }
+
   getUser( ): Observable<any> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
